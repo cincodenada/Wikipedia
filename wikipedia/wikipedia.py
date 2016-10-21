@@ -451,6 +451,9 @@ class WikipediaPage(object):
 
     return self._nslinks[namespace]
 
+  def query(self, params):
+      return self.__continued_query(params)
+
   def html(self):
     '''
     Get full page HTML.
