@@ -435,6 +435,22 @@ class WikipediaPage(object):
     else:
       return {'pageids': self.pageid}
 
+  def nslinks(self, namespace):
+    if not getattr(self, '_nslinks', False):
+      self._nslinks = {}
+
+    if not getattr(self._nslinks, namespace, False):
+      self._nslinks[namespace] = [
+        link['title']
+        for link in self.__continued_query({
+          'prop': 'links',
+          'plnamespace': namespace,
+          'pllimit': 'max'
+        })
+      ]
+
+    return self._nslinks[namespace]
+
   def html(self):
     '''
     Get full page HTML.
